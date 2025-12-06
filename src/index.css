@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer utilities {
+  .hover-glow:hover {
+    text-shadow: 0 0 6px #facc15, 0 0 12px #facc15, 0 0 20px #facc15;
+  }
+}
+/* === fancy animated border card === */
+@layer components {
+  .fancy-card {
+    @apply relative bg-white rounded-2xl shadow-md border border-gray-200 transition-transform duration-300 overflow-hidden;
+  }
+
+  .fancy-card::before {
+    content: "";
+    @apply absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300;
+    background: linear-gradient(90deg, #facc15, #dc2626, #000000, #facc15);
+    background-size: 300% 300%;
+    padding: 2px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .fancy-card:hover::before {
+    opacity: 1;
+    animation: borderRun 2s linear 1;
+  }
+
+  .fancy-card:hover {
+    @apply scale-[1.02];
+  }
+}
+
+@keyframes goldPulse {
+  0%, 100% { text-shadow: 0 0 8px #facc15, 0 0 12px #facc15; }
+  50% { text-shadow: 0 0 16px #facc15, 0 0 24px #ffd700; }
+}
+
+.hover-glow:hover {
+  animation: goldPulse 1.2s ease-in-out infinite alternate;
+}
